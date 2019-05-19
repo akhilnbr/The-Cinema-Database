@@ -1,0 +1,53 @@
+﻿@model The_Cinema_Bucket.Models.movie
+@{
+    ViewBag.Title = "Details";
+}
+<style>
+    .imgecontainer{
+        border: 4px solid white
+    }
+    .container-fluid{
+            background-color: #6e707e;
+    margin-block-start: -24px;
+    padding-block-start: 70px;
+    color:white;
+    }
+    .details,.imagedetails{
+       margin-left: 98px;
+       bottom: 20px;
+    }
+    #content{
+      background-color:   #6e707e;
+    }
+   
+</style>
+<div class="row">
+    <div class="col-3 imagedetails" >
+        <div class="imgecontainer">
+            @foreach (var items in Model.lisstMovies)
+            {
+                <img class="img-responsive" src="~/moviePoster/@items.posterurl" height="350" width="240"/>
+            }
+       
+        </div>
+        
+    </div>
+
+    <div class="col-6 details">
+        @foreach (var item in Model.lisstMovies)
+        {
+            <h2><b>@item.movieName</b></h2>
+            <h4><b>Cast</b></h4>@item.actor1 <span>,</span> @item.actor2 <span>,</span> @item.actor3
+            <h4><b>Plot</b></h4>@item.plot
+            <h4><b>Year</b></h4>@item.year
+            <h4><b>Producer</b></h4>@item.producer
+        }
+    </div>
+</div>
+
+
+
+   
+    
+    
+

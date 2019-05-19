@@ -1,0 +1,148 @@
+﻿@model The_Cinema_Bucket.Models.movie
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    #stylemodel{
+         position: absolute;
+    left: 434px;
+    }
+       
+
+</style>
+<h2>Index</h2>
+
+<table class="table table-dark">
+
+
+    <tr>
+        <td>
+            #
+        </td>
+        <td>
+            <b> Movie</b>
+           
+        </td>
+        <td>
+            <b> Cast 1</b>
+           
+        </td>
+        <td>
+            <b> Cast 2</b>
+           
+        </td>
+        <td>
+            <b>  Cast 3</b>
+          
+        </td>
+        <td>
+            <b>  Plot</b>
+          
+        </td>
+        <td>
+            <b> Year</b>
+           
+        </td>
+        <td>
+            <b>Producer</b>
+            
+        </td>
+    </tr>
+   
+  
+     
+    @foreach (var item in Model.lisstMovies )
+    {
+      
+            
+   
+
+
+        <tr>
+            <td>
+                @item.id
+            </td>
+            <td>
+                @item.movieName
+            </td>
+            <td>
+                @item.actor1
+            </td>
+            <td>
+                @item.actor2
+            </td>
+            <td>
+                @item.actor3
+            </td>
+            <td>
+                @item.plot
+            </td>
+            <td>
+                @item.year
+            </td>
+            <td>
+                @item.producer
+            </td>
+
+            <td><a href="@Url.Action("Edit", new {id =item.id })"><b class="btn btn-danger">View Full Details</b></a></td>
+            <td><a href="#" class="btn btn-success" onclick="EditMovie(@item.id)"><i class="glyphicon glyphicon-pencil"></i> </a> </td>
+           
+        </tr>
+ 
+
+    }
+
+    
+   
+</table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="stylemodel">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="myModalBodyDiv1">
+              
+                  
+                           
+
+                     
+                            
+                           
+
+                           
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        var EditMovie = function(id) {
+
+            var url = "/Movie/EditDetails?id=" + id;
+            $("#myModalBodyDiv1").load(url,
+                function() {
+                    $("#exampleModal").modal("show");
+
+                })
+        }
+
+      
+
+    </script>
+    
+}

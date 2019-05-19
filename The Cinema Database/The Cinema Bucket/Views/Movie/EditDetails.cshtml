@@ -1,0 +1,74 @@
+﻿@using System.Web.UI.WebControls
+@model The_Cinema_Bucket.Models.movie
+<style>
+
+</style>
+<div>
+
+    <form id="myForm">
+        <div class="row">
+            <div class="col-6">
+                <b>@Html.DisplayName("Movie")</b>
+                @Html.TextBoxFor(x => x.id, new { @type = "hidden" })
+                @Html.TextBoxFor(x => x.movieName, new { @class = "form-control", @placeholder = "movie" })
+                <b>@Html.DisplayName("Year Of Release")</b>
+                @Html.TextBoxFor(x => x.year, new { @class = "form-control", @placeholder = "movie" })
+            </div>
+            <div class="col-6">
+                <b> Plot </b>
+                @Html.TextBoxFor(x => x.plot, new { @class = "form-control", @placeholder = "plot" })
+                <b> Cast 1 </b>
+                @Html.TextBoxFor(x => x.actor1, new { @class = "form-control", @placeholder = "cast" })
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <b> Cast 2 </b>
+                @Html.TextBoxFor(x => x.actor2, new { @class = "form-control", @placeholder = "cast" })
+
+                <b> Cast 3 </b>
+                @Html.TextBoxFor(x => x.actor3, new { @class = "form-control", @placeholder = "cast" })
+            </div>
+            <div class="col-6">
+                <b> Producer </b>
+                @Html.TextBoxFor(x => x.producer, new { @class = "form-control", @placeholder = "producer" ,@required="true" })
+
+                <b> Poster </b>
+                <input name="posterName" class="form-control" type="file"/>
+            </div>
+        </div>
+
+       
+    </form>
+    <a href="#" id="btnsave" class="btn btn-success">Update Changes</a>
+</div>
+
+
+  
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function () {
+        debugger
+        $("#btnsave").click(function () {
+         
+
+           
+    
+            var details = $("#myForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Movie/UpdateDetails",
+                data: details,
+                success: function () {
+                    $("#exampleModal").modal("hide");
+                    window.location.href = "/Movie/Index";
+                }
+            })
+                
+            })
+            
+        })
+        
+</script>

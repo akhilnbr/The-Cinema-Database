@@ -1,0 +1,309 @@
+﻿@model The_Cinema_Bucket.ViewModel.MovieViewModel   
+
+@{
+    ViewBag.Title = "Actors";
+}
+
+ <style>
+        .container-fluid{
+   background-color: #6e707e;
+    margin-block-start: -24px;
+    padding-block-start: 70px;
+    color:darkgrey;
+    padding-bottom: 90px;
+    }
+       #modalcontents{
+           position: absolute;
+           right: 640px;
+       }
+       
+</style>
+
+<div class="modal fade" id="exampleModalactor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="stylemodel">
+        <div class="modal-content" id="modalcontents">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Add Actors</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="myModalBodyDiv1">
+
+                <form id="actorform">
+                    <div class="row">
+                        <div class="col-6">
+                            <b>Name</b>
+                            @Html.TextBoxFor(x => x.actorName, new { @class = "form-control",@required="true"})
+                            
+                            <b>Sex</b>
+                            male
+                            @Html.RadioButtonFor(x=>x.actorSex,new {@class="form-control"})
+                            female
+                            @Html.RadioButtonFor(x => x.actorSex, new { @class = "form-control"})
+                        </div>
+                        <div class="col-6">
+                            <b> DOB </b>
+                            <input type="text" class="form-control" name="actorDob" id="datepicker" required/>
+           
+                            <b> Bio</b>
+                            @Html.TextAreaFor(x => x.actorBio, new { @class = "form-control", @required = "true" })
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="saveactor">Add Actor</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="ProducerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="stylemodel">
+        <div class="modal-content" id="modalcontents">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Producer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="myModalBodyDiv1">
+              
+                <form id="producerform">
+                    <div class="row">
+                        <div class="col-6">
+                            <b>Name</b>
+                            @Html.TextBoxFor(x => x.producerName, new { @class = "form-control" })
+                            <b>Sex</b>
+                            male
+                            @Html.RadioButtonFor(x => x.actorSex, new { @class = "form-control" })
+                            female
+                            @Html.RadioButtonFor(x => x.actorSex, new { @class = "form-control" })
+                        </div>
+                        <div class="col-6">
+                            <b> DOB </b>
+                            <input type="text" class="form-control" name="produerDob" id="datepicker1"/>
+           
+                            <b> Bio</b>
+                            @Html.TextAreaFor(x => x.producerbio, new { @class = "form-control", @placeholder = "Bio" })
+                        </div>
+
+                    </div>
+                </form>   
+                           
+
+                     
+                           
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveproducer">Save producer</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-warning" id="btnactor">Add Actor</button>
+<button class="btn btn-secondary" id="btnproducer" >Add Producer</button>
+<div class="breadcrumb">
+
+    <h2 class="text-center text-primary table-hover "><b>Movies</b></h2><span></span>
+
+
+    <div class="breadcrumb">
+        
+        
+
+
+        @using (Html.BeginForm("Movies", "Movie", FormMethod.Post, new {enctype = "multipart/form-data",id="movieform" }))
+        {
+
+
+            <table class="table  table-hover ">
+                @Html.AntiForgeryToken()
+                <tr>
+        
+                    <td>
+                        <b>@Html.DisplayName("Movie")</b>
+                        <input type="text" name="movieName" class="form-control"  id="moviesid" required/>
+                        <div> @Html.ValidationMessageFor(x=>x.movieName,"",new {@class="text-danger"})</div>
+                    </td>
+
+                    <td>
+                        @{
+                            int date = DateTime.Now.Year;
+                        }
+                        <b>@Html.DisplayName("Year Of Release")</b>
+                        <input type="text" name="year" class="form-control" id="yearid" required />
+                        <div id="show_error_date"></div>
+                    </td>
+               
+                  
+                    <td>
+                        <b> Plot </b>
+                        <input type="text" name="plot" class="form-control" id="ploid" required/>
+                        <div id="show_error_plot"></div>
+                    </td>
+     
+                   
+                </tr>
+                <tr>
+                  
+                    <td>
+                        <b> Cast 1 </b>
+                        @Html.DropDownList("actor1", new SelectList(ViewBag.actorlist, "Text", "Text"), "select caste", new { @class = "form-control" ,@required="true"})
+                 
+
+                    </td>
+
+               
+                 
+                    <td>
+                        <b> Cast 2 </b>
+                        @Html.DropDownList("actor2", new SelectList(ViewBag.actorlist, "Text", "Text"), "select caste", new { @class = "form-control" , @required = "true" })
+                   
+                    </td>
+
+                
+                  
+                    <td>
+                        <b> Cast 3 </b>
+                        @Html.DropDownList("actor3", new SelectList(ViewBag.actorlist, "Text", "Text"), "select caste", new { @class = "form-control", @required = "true" })
+
+                    </td>
+                    <td>
+                        <b> Producer </b>
+                        @Html.DropDownList("producer", new SelectList(ViewBag.producerlist, "Text", "Text"),"select producer",new {@class="form-control", @required = "true" })
+                      
+                    </td>
+
+                </tr>
+                <tr>
+               
+                    
+                    
+                    <td>
+                        <b> Poster </b>
+                        <input name="posterName" class="form-control" type="file"/>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Add Movie" ,new class="btn btn-danger" id="myBtnn"/>
+                    </td>
+                  
+            
+                </tr>
+
+
+
+
+
+
+
+
+
+
+            </table>
+           
+        }
+       
+
+
+        @ViewBag.Status
+
+
+
+
+    </div>
+
+
+
+</div>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#saveactor").click(function() {
+
+                var actordetailss = $("#actorform").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/Movie/Addactor",
+                    data: actordetailss,
+                    success: function() {
+                        $("#exampleModalactor").modal("hide");
+
+                        window.location.href = "/Movie/Movies";
+                    }
+                })
+
+
+            })
+
+
+        })
+        $(document).ready(function() {
+            debugger
+            $("#btnactor").click(function() {
+                $("#exampleModalactor").modal("show");
+
+            })
+        })
+    </script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#datepicker").datepicker();
+            $("#datepicker1").datepicker();
+
+        });
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#saveproducer").click(function() {
+
+                var producerdetails = $("#producerform").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/Movie/AddProducer",
+                    data: producerdetails,
+                    success: function() {
+                        $("#ProducerModal").modal("hide");
+
+                        window.location.href = "/Movie/Movies";
+                    }
+                })
+
+
+            })
+
+
+        })
+        $(document).ready(function() {
+            debugger
+            $("#btnproducer").click(function() {
+                $("#ProducerModal").modal("show");
+
+            })
+        })
+    </script>
+    
+}
+
